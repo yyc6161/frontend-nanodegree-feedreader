@@ -29,7 +29,7 @@ var allFeeds = [
  */
 function init() {
     // Load the first feed we've defined (index of 0).
-    loadFeed(0);
+    loadFeed(10);
 }
 
 /* This function performs everything necessary to load a
@@ -40,9 +40,9 @@ function init() {
  * This function all supports a callback as the second parameter
  * which will be called after everything has run successfully.
  */
- function loadFeed(id, cb) {
-     var feedUrl = allFeeds[id].url,
-         feedName = allFeeds[id].name;
+ function loadFeed(maxLen, cb) {
+     var feedUrl = allFeeds[0].url,
+         feedName = allFeeds[0].name;
 
      $.ajax({
        type: "POST",
@@ -65,9 +65,13 @@ function init() {
                   * entryTemplate (created above using Handlebars) and append
                   * the resulting HTML to the list of entries on the page.
                   */
-                 entries.forEach(function(entry) {
+                 /*entries.forEach(function(entry) {
                      container.append(entryTemplate(entry));
-                 });
+                 });*/
+                 if( maxLen < entriesLen ) entriesLen = maxLen;
+                 for(var i = 0; i < entriesLen; i++){
+                     container.append(entryTemplate(entries[i]));
+                 };
 
                  if (cb) {
                      cb();
@@ -132,3 +136,4 @@ $(function() {
         $('body').toggleClass('menu-hidden');
     });
 }());
+
