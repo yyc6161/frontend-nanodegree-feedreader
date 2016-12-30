@@ -83,7 +83,7 @@ $(function() {
 
     /* Write a new test suite named "Initial Entries" */
     describe('Initial Entries',function() {
-        var container = $('.feed');
+
         /* Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
@@ -95,8 +95,7 @@ $(function() {
         });
 
         it('success, at least one .entry element is initiated',function(){
-            expect(container.html().length).not.toBe(0);
-            var entry =  $('.feed .entry')
+            var entry = $('.feed .entry')
             expect(entry.length).toBeGreaterThan(0);
         });
     });     
@@ -109,17 +108,16 @@ $(function() {
          * Remember, loadFeed() is asynchronous.
          */
         beforeEach(function(done) {
-            loadFeed(6,function() {
+            loadFeed(5,function() {
                 oldFeed = $('.feed').html();
-                done();
-            });
-            loadFeed(8,function() {
-                newFeed = $('.feed').html();
-                done();
+                loadFeed(6,function() {
+                    newFeed = $('.feed').html();
+                    done();
+                });              
             });
         });
 
-        it('is actually updated',function(){              
+        it('is actually updated',function(){            
             expect(oldFeed.length).toBeGreaterThan(0);
             expect(newFeed.length).toBeGreaterThan(0);
             expect(newFeed).not.toBe(oldFeed);
